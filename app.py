@@ -680,17 +680,27 @@ def ship_deploy():
 # OpenAI-Compatible Sovereign Model Deployment & Inference APIs
 # -------------------------------------------------------------
 DEPLOYED_CONFIG = {
-    "active_model": "zieork-micro",
+    "active_model": "zieork-prime-1b",
     "device": "cpu",
     "status": "ONLINE",
-    "workers": 4,
-    "quantization": "fp32",
+    "workers": 6,
+    "quantization": "q4_k_m",
     "deployed_at": 1789476000,
 }
 
 @app.route("/v1/models", methods=["GET"])
 def list_models():
     models = [
+        {
+            "id": "zieork-prime-1b",
+            "object": "model",
+            "created": 1789476000,
+            "owned_by": "zieork-systems",
+            "permission": [],
+            "root": "GGUF-Prime",
+            "parent": None,
+            "description": "Sovereign 1.23B parameter reasoning and code synthesis neural core"
+        },
         {
             "id": "zieork-micro",
             "object": "model",
@@ -710,16 +720,6 @@ def list_models():
             "root": "GGUF-Quant",
             "parent": None,
             "description": "Quantized GGUF edge model for real-time tool calling and ReAct steps"
-        },
-        {
-            "id": "zieork-prime-1b",
-            "object": "model",
-            "created": 1789476000,
-            "owned_by": "zieork-systems",
-            "permission": [],
-            "root": "GGUF-Prime",
-            "parent": None,
-            "description": "Sovereign 1B+ parameter reasoning and code synthesis neural core"
         }
     ]
     return jsonify({"object": "list", "data": models})
@@ -727,10 +727,10 @@ def list_models():
 @app.route("/api/model/deploy", methods=["POST"])
 def deploy_model():
     data = request.json or {}
-    model_name = data.get("model", "zieork-micro")
+    model_name = data.get("model", "zieork-prime-1b")
     device = data.get("device", "cpu")
-    quantization = data.get("quantization", "fp32")
-    threads = data.get("threads", 4)
+    quantization = data.get("quantization", "q4_k_m")
+    threads = data.get("threads", 6)
 
     DEPLOYED_CONFIG["active_model"] = model_name
     DEPLOYED_CONFIG["device"] = device
@@ -755,9 +755,9 @@ def model_status():
         "status": "HEALTHY",
         "deployment": DEPLOYED_CONFIG,
         "tiers": {
+            "zieork-prime-1b": {"available": prime_ready, "path": PRIME_PATH, "engine": "Llama GGUF (1.23B Coder)"},
             "zieork-micro": {"available": micro_ready, "path": MICRO_PATH, "engine": "NumPy MicroTransformer"},
-            "zieork-fast-135m": {"available": fast_ready, "path": FAST_PATH, "engine": "Llama GGUF"},
-            "zieork-prime-1b": {"available": prime_ready, "path": PRIME_PATH, "engine": "Llama GGUF"}
+            "zieork-fast-135m": {"available": fast_ready, "path": FAST_PATH, "engine": "Llama GGUF"}
         },
         "specs": {
             "architecture": "Causal Decoder-Only Transformer",
@@ -770,11 +770,11 @@ def model_status():
 @app.route("/v1/chat/completions", methods=["POST"])
 def openai_chat_completions():
     data = request.json or {}
-    requested_model = data.get("model", DEPLOYED_CONFIG.get("active_model", "zieork-micro"))
+    requested_model = data.get("model", DEPLOYED_CONFIG.get("active_model", "zieork-prime-1b"))
     messages = data.get("messages", [])
     stream = data.get("stream", False)
 
-    system_prompt = "You are Zieork, a sovereign edge AI assistant."
+    system_prompt = "You are Zieork Prime, a sovereign edge AI reasoning and code intelligence system."
     cleaned_messages = []
     for msg in messages:
         if msg.get("role") == "system":
@@ -782,10 +782,24 @@ def openai_chat_completions():
         else:
             cleaned_messages.append(msg)
 
-    engine = get_micro_engine()
+    is_prime = requested_model in ["zieork-prime-1b", "prime"] and os.path.exists(PRIME_PATH)
     created_ts = int(time.time())
     cmpl_id = f"chatcmpl-zieork-{str(uuid.uuid4())[:12]}"
 
+    if is_prime:
+        prime_llm = get_prime()
+        formatted = [{"role": "system", "content": system_prompt}] + cleaned_messages
+        if stream:
+            def generate_prime_sse():
+                for chunk in prime_llm.create_chat_completion(messages=formatted, stream=True, max_tokens=1024):
+                    yield f"data: {json.dumps(chunk)}\n\n"
+                yield "data: [DONE]\n\n"
+            return Response(generate_prime_sse(), mimetype="text/event-stream")
+
+        res = prime_llm.create_chat_completion(messages=formatted, max_tokens=1024)
+        return jsonify(res)
+
+    engine = get_micro_engine()
     if stream:
         def generate_sse():
             for chunk in engine.stream_response(cleaned_messages, system_prompt=system_prompt):
