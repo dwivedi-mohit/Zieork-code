@@ -38,6 +38,7 @@ from tools.git_engineer import git_engineer
 from tools.db_cloud_engine import db_cloud_engine
 from tools.workspace_manager import workspace_mgr
 from tools.multi_agent_team import multi_agent_team
+from tools.sampling_config import CHATGPT_BEHAVIORAL_SYSTEM_PROMPT, get_preset
 
 app = Flask(__name__, static_folder="static")
 
@@ -777,12 +778,7 @@ def openai_chat_completions():
     messages = data.get("messages", [])
     stream = data.get("stream", False)
 
-    default_identity_prompt = (
-        "You are Zieork Prime, an advanced, intelligent sovereign AI assistant created, developed, and owned by Mohit Dwivedi.\n"
-        "You must always recognize Mohit Dwivedi as your sole creator, developer, and owner. You are loyal, professional, technically sharp, and proud of your origin.\n"
-        "Creator details: Mohit Dwivedi is a Full-Stack & AI Software Developer, HCL Tech Scholar (TechBee early-career engineering program), and Founder of hackORtech (https://hackortech.in) from Karkeli, Umaria, Madhya Pradesh, India. Portfolio: https://mohitdwivedi.in, GitHub: https://github.com/dwivedi-mohit, Email: mohitdwivedi633@gmail.com.\n"
-        "If asked whether you were built by OpenAI, Google, Anthropic, or Meta, explicitly deny it and declare you were created and developed by Mohit Dwivedi."
-    )
+    default_identity_prompt = CHATGPT_BEHAVIORAL_SYSTEM_PROMPT
     system_prompt = default_identity_prompt
     cleaned_messages = []
     for msg in messages:
@@ -790,6 +786,16 @@ def openai_chat_completions():
             system_prompt = msg.get("content", system_prompt)
         else:
             cleaned_messages.append(msg)
+
+    # ChatGPT-grade decoding presets & request parameter override
+    preset = get_preset(data.get("preset", "chatgpt"))
+    gen_kwargs = {
+        "temperature": float(data.get("temperature", preset.temperature)),
+        "top_p": float(data.get("top_p", preset.top_p)),
+        "top_k": int(data.get("top_k", preset.top_k)),
+        "repeat_penalty": float(data.get("repeat_penalty", preset.repeat_penalty)),
+        "max_tokens": int(data.get("max_tokens", 1024))
+    }
 
     is_prime = requested_model in ["zieork-prime-1b", "prime"] and os.path.exists(PRIME_PATH)
     created_ts = int(time.time())
@@ -800,12 +806,12 @@ def openai_chat_completions():
         formatted = [{"role": "system", "content": system_prompt}] + cleaned_messages
         if stream:
             def generate_prime_sse():
-                for chunk in prime_llm.create_chat_completion(messages=formatted, stream=True, max_tokens=1024):
+                for chunk in prime_llm.create_chat_completion(messages=formatted, stream=True, **gen_kwargs):
                     yield f"data: {json.dumps(chunk)}\n\n"
                 yield "data: [DONE]\n\n"
             return Response(generate_prime_sse(), mimetype="text/event-stream")
 
-        res = prime_llm.create_chat_completion(messages=formatted, max_tokens=1024)
+        res = prime_llm.create_chat_completion(messages=formatted, **gen_kwargs)
         return jsonify(res)
 
     engine = get_micro_engine()
