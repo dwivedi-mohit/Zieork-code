@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Financial & ROI Projection Engine — Zieork Live Canvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              900: '#4c1d95',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f3f4f6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col justify-start items-center">
+  <div class="w-full max-w-5xl">
+    <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800 text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-semibold uppercase tracking-wider text-slate-300">Zieork Live Canvas</span>
+        <span>•</span>
+        <span>Dynamic Financial & ROI Projection Engine</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="bg-purple-900/40 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded text-[11px]">Interactive Artifact</span>
+      </div>
+    </div>
+    
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl backdrop-blur-xl">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">SaaS & Enterprise ROI Simulator</h2>
+          <p class="text-sm text-slate-400">Calculate annual savings, payback timeline, and operational leverage.</p>
+        </div>
+        <div class="bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full text-emerald-400 text-sm font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-line"></i> Live Projections
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-5 bg-slate-800/40 p-5 rounded-xl border border-slate-800/60">
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <span class="text-slate-300">Active Team Engineers:</span>
+              <span id="teamVal" class="text-purple-400 font-bold">12</span>
+            </div>
+            <input type="range" id="teamSize" min="1" max="100" value="12" class="w-full accent-purple-500 cursor-pointer" oninput="calcROI()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <span class="text-slate-300">Average Annual Salary ($):</span>
+              <span id="salaryVal" class="text-purple-400 font-bold">$135,000</span>
+            </div>
+            <input type="range" id="salary" min="50000" max="250000" step="5000" value="135000" class="w-full accent-purple-500 cursor-pointer" oninput="calcROI()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <span class="text-slate-300">Estimated Productivity Gain (%):</span>
+              <span id="gainVal" class="text-purple-400 font-bold">32%</span>
+            </div>
+            <input type="range" id="gainPercent" min="5" max="60" value="32" class="w-full accent-purple-500 cursor-pointer" oninput="calcROI()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm font-medium mb-1.5">
+              <span class="text-slate-300">Monthly AI Platform Cost ($):</span>
+              <span id="costVal" class="text-purple-400 font-bold">$400</span>
+            </div>
+            <input type="range" id="platformCost" min="50" max="2500" step="50" value="400" class="w-full accent-purple-500 cursor-pointer" oninput="calcROI()">
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-between space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-purple-950/30 border border-purple-800/40 p-4 rounded-xl">
+              <div class="text-xs text-purple-300 uppercase font-semibold">Annual Value Unlocked</div>
+              <div id="annualValue" class="text-2xl md:text-3xl font-black text-white mt-1">$518,400</div>
+              <div class="text-xs text-slate-400 mt-1">Recovered engineering hours</div>
+            </div>
+
+            <div class="bg-emerald-950/30 border border-emerald-800/40 p-4 rounded-xl">
+              <div class="text-xs text-emerald-300 uppercase font-semibold">Net Annual ROI</div>
+              <div id="netRoi" class="text-2xl md:text-3xl font-black text-emerald-400 mt-1">10,700%</div>
+              <div class="text-xs text-slate-400 mt-1">Payback in 4.2 days</div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/60 border border-slate-700/60 p-4 rounded-xl space-y-2 text-sm">
+            <div class="flex justify-between text-slate-400">
+              <span>Annual Software Overhead:</span>
+              <span id="annualCostText" class="text-white font-medium">$4,800</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>Total Net Profit Impact:</span>
+              <span id="netProfitText" class="text-emerald-400 font-bold">$513,600</span>
+            </div>
+            <div class="pt-2 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
+              <span>Model: Zieork Sovereign Edge Baseline</span>
+              <span class="text-purple-400">Deterministic Latency</span>
+            </div>
+          </div>
+
+          <button onclick="alert('Projection scenario saved to local storage!')" class="w-full py-3 bg-purple-600 hover:bg-purple-500 transition text-white font-bold rounded-xl shadow-lg shadow-purple-600/30">
+            <i class="fa-solid fa-file-arrow-down mr-2"></i> Save Scenario to Pipeline
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calcROI() {
+        const team = parseInt(document.getElementById('teamSize').value);
+        const salary = parseInt(document.getElementById('salary').value);
+        const gain = parseInt(document.getElementById('gainPercent').value) / 100;
+        const cost = parseInt(document.getElementById('platformCost').value);
+
+        document.getElementById('teamVal').innerText = team;
+        document.getElementById('salaryVal').innerText = '$' + salary.toLocaleString();
+        document.getElementById('gainVal').innerText = Math.round(gain * 100) + '%';
+        document.getElementById('costVal').innerText = '$' + cost.toLocaleString();
+
+        const annualPayroll = team * salary;
+        const valueUnlocked = annualPayroll * gain;
+        const annualCost = cost * 12;
+        const netProfit = valueUnlocked - annualCost;
+        const roiPercent = Math.round((netProfit / Math.max(annualCost, 1)) * 100);
+
+        document.getElementById('annualValue').innerText = '$' + Math.round(valueUnlocked).toLocaleString();
+        document.getElementById('netRoi').innerText = roiPercent.toLocaleString() + '%';
+        document.getElementById('annualCostText').innerText = '$' + Math.round(annualCost).toLocaleString();
+        document.getElementById('netProfitText').innerText = '$' + Math.round(netProfit).toLocaleString();
+      }
+      calcROI();
+    </script>
+
+  </div>
+</body>
+</html>

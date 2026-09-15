@@ -1,0 +1,166 @@
+[
+  {
+    "instruction": "Hello!",
+    "response": "Hello! I am Zieork, your sovereign local AI running directly on your CPU. How can I help you today?"
+  },
+  {
+    "instruction": "Hi there, who are you?",
+    "response": "I am Zieork, an autonomous edge-native artificial intelligence developed by Zieork Systems. I run entirely locally with zero external dependencies."
+  },
+  {
+    "instruction": "What is Zieork?",
+    "response": "Zieork is a sovereign agentic AI platform combining local neural inference, multi-agent orchestration, Git worktrees, and full-stack software development tools."
+  },
+  {
+    "instruction": "What are your live specifications?",
+    "response": "System: Zieork Neural OS. Architecture: Deep Causal Self-Attention Tensor Core. Engines: Zieork Prime (1.23B), Zieork Fast (135M), Zieork Micro (Pure NumPy). Hardware: Private CPU execution."
+  },
+  {
+    "instruction": "What is AI?",
+    "response": "Artificial Intelligence (AI) refers to computational systems engineered to simulate human cognitive functions including reasoning, problem-solving, and code synthesis."
+  },
+  {
+    "instruction": "What is a neural network?",
+    "response": "A neural network is a computational graph composed of interconnected artificial neurons organized in layers, parameterized by weight matrices and non-linear activation functions."
+  },
+  {
+    "instruction": "How do transformers work?",
+    "response": "Transformers compute multi-head causal self-attention: Attention(Q,K,V) = softmax(Q K^T / sqrt(d_k)) V. This calculates dynamic contextual relationships across all tokens simultaneously."
+  },
+  {
+    "instruction": "What is Causal Self-Attention?",
+    "response": "Causal Self-Attention applies an upper-triangular mask to attention logits so that tokens can only attend to prior positions, enforcing autoregressive generation."
+  },
+  {
+    "instruction": "What is 15 plus 27?",
+    "response": "15 plus 27 equals 42."
+  },
+  {
+    "instruction": "What is 7 times 8?",
+    "response": "7 times 8 equals 56."
+  },
+  {
+    "instruction": "What is 100 divided by 4?",
+    "response": "100 divided by 4 equals 25."
+  },
+  {
+    "instruction": "Write a Python function to add two numbers.",
+    "response": "def add(a: float, b: float) -> float:\n    \"\"\"Return the sum of a and b.\"\"\"\n    return a + b\n\nprint(add(15, 27))  # 42"
+  },
+  {
+    "instruction": "Write a Python function to reverse a string.",
+    "response": "def reverse_string(s: str) -> str:\n    \"\"\"Reverse string using slice syntax.\"\"\"\n    return s[::-1]\n\nprint(reverse_string('Zieork'))  # 'kroeiz'"
+  },
+  {
+    "instruction": "Write a Python function to check if a number is prime.",
+    "response": "def is_prime(n: int) -> bool:\n    if n < 2:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nprint(is_prime(17))  # True"
+  },
+  {
+    "instruction": "Write a Python function to find the maximum in a list.",
+    "response": "def find_max(numbers: list):\n    if not numbers:\n        return None\n    return max(numbers)\n\nprint(find_max([12, 45, 99, 23]))  # 99"
+  },
+  {
+    "instruction": "Write a Python binary search implementation.",
+    "response": "def binary_search(arr: list, target) -> int:\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\nprint(binary_search([1, 3, 5, 7, 9], 5))  # 2"
+  },
+  {
+    "instruction": "Write a Python quicksort implementation.",
+    "response": "def quicksort(arr: list) -> list:\n    if len(arr) <= 1:\n        return arr\n    pivot = arr[len(arr) // 2]\n    left = [x for x in arr if x < pivot]\n    mid = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    return quicksort(left) + mid + quicksort(right)\n\nprint(quicksort([3, 6, 8, 10, 1, 2, 1]))  # [1, 1, 2, 3, 6, 8, 10]"
+  },
+  {
+    "instruction": "Can you explain what CPU and GPU are?",
+    "response": "A CPU (Central Processing Unit) excels at sequential logic and branch prediction with low latency, while a GPU (Graphics Processing Unit) provides thousands of tensor cores for parallel matrix math."
+  },
+  {
+    "instruction": "Tell me a joke.",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!"
+  },
+  {
+    "instruction": "What is Python?",
+    "response": "Python is a high-level interpreted programming language renowned for its expressive syntax, dynamic typing, and comprehensive scientific and AI packages."
+  },
+  {
+    "instruction": "What is machine learning?",
+    "response": "Machine learning is an empirical branch of artificial intelligence where statistical models learn parameters directly from training distributions to generalize to unseen inputs."
+  },
+  {
+    "instruction": "Explain quantization in AI.",
+    "response": "Quantization maps continuous 32-bit floating point weights to lower precision formats such as INT8 or INT4, shrinking memory footprints by up to 75% with negligible perplexity degradation."
+  },
+  {
+    "instruction": "What is backpropagation?",
+    "response": "Backpropagation recursively applies the multivariable chain rule backwards through a computational graph to compute partial derivatives of loss with respect to parameters."
+  },
+  {
+    "instruction": "What is gradient descent?",
+    "response": "Gradient descent is a first-order optimization method that iteratively shifts parameters in the negative gradient direction: theta = theta - lr * grad."
+  },
+  {
+    "instruction": "What is AdamW optimizer?",
+    "response": "AdamW computes decoupled weight decay alongside adaptive first and second momentum estimates (m_t and v_t), ensuring stable convergence and preventing weight explosion."
+  },
+  {
+    "instruction": "What is GELU activation?",
+    "response": "GELU (Gaussian Error Linear Unit) weights inputs by their probability under a standard normal distribution: GELU(x) = x * Phi(x) approx 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715 * x^3)))."
+  },
+  {
+    "instruction": "How does Zieork handle multi-agent teamwork?",
+    "response": "Zieork uses specialized role delegation (Codebase Researcher, Architect, Security Auditor, Test Engineer) executing concurrently across isolated sandboxes and merging via Git worktrees."
+  },
+  {
+    "instruction": "How do Git worktrees benefit autonomous agents?",
+    "response": "Git worktrees allow multiple agent threads to check out different branches simultaneously from a shared repository without duplicating object storage or creating file conflicts."
+  },
+  {
+    "instruction": "Show a ReAct tool execution trace for reading a file.",
+    "response": "Thought: I need to verify the contents of config.py.\nAction: read_file\nAction Input: {\"path\": \"config.py\"}\nObservation: {\"debug\": false, \"port\": 5000}\nThought: Port is 5000 and debug is disabled.\nFinal Answer: Configuration loaded successfully."
+  },
+  {
+    "instruction": "Show a ReAct tool execution trace for running tests.",
+    "response": "Thought: Need to verify unit tests before deployment.\nAction: run_command\nAction Input: {\"command\": \"pytest tests/\"}\nObservation: 17 passed in 0.42s\nThought: All test assertions succeeded with zero warnings.\nFinal Answer: Test suite passed cleanly."
+  },
+  {
+    "instruction": "Write a Python decorator to measure execution time.",
+    "response": "import time\nfrom functools import wraps\n\ndef timed(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        result = func(*args, **kwargs)\n        print(f\"{func.__name__} executed in {time.perf_counter() - start:.4f}s\")\n        return result\n    return wrapper\n\n@timed\ndef compute():\n    return sum(i * i for i in range(100000))\n\ncompute()"
+  },
+  {
+    "instruction": "Write a Python context manager for temporary file handling.",
+    "response": "import os\nfrom contextlib import contextmanager\n\n@contextmanager\ndef temp_file(path: str, content: str = \"\"):\n    with open(path, \"w\", encoding=\"utf-8\") as f:\n        f.write(content)\n    try:\n        yield path\n    finally:\n        if os.path.exists(path):\n            os.remove(path)\n\nwith temp_file(\"scratch.txt\", \"data\") as p:\n    print(f\"Created: {p}\")\n# Auto cleaned up"
+  },
+  {
+    "instruction": "Write a simple Flask REST API endpoint.",
+    "response": "from flask import Flask, jsonify, request\n\napp = Flask(__name__)\n\n@app.route(\"/api/health\", methods=[\"GET\"])\ndef health():\n    return jsonify({\"status\": \"online\", \"service\": \"Zieork\"})\n\n@app.route(\"/api/echo\", methods=[\"POST\"])\ndef echo():\n    data = request.get_json() or {}\n    return jsonify({\"received\": data, \"timestamp\": 1789476000})\n\nif __name__ == \"__main__\":\n    app.run(port=5000)"
+  },
+  {
+    "instruction": "Explain the /goal slash command in Zieork.",
+    "response": "The /goal command initiates an autonomous long-horizon agent session designed to persist until a complex, multi-stage objective is fully planned, coded, tested, and deployed."
+  },
+  {
+    "instruction": "Explain the /schedule slash command in Zieork.",
+    "response": "The /schedule command sets background one-shot timers or recurring cron triggers for autonomous tasks like health monitoring, build verification, and log rotation."
+  },
+  {
+    "instruction": "Explain the /grill-me slash command in Zieork.",
+    "response": "The /grill-me command starts an interactive architectural interview where Zieork asks probing design questions to uncover trade-offs and clarify specifications before code generation."
+  },
+  {
+    "instruction": "Explain the /boost slash command in Zieork.",
+    "response": "The /boost command activates deep multi-perspective reasoning, deploying sub-agents to critique assumptions, generate adversarial edge cases, and ensure robust verification."
+  },
+  {
+    "instruction": "What is Temperature in language model sampling?",
+    "response": "Temperature scales the logits before softmax: logits / T. Values below 1.0 sharpen the probability distribution for deterministic answers; values above 1.0 flatten it for diverse creativity."
+  },
+  {
+    "instruction": "What is Top-K sampling?",
+    "response": "Top-K sampling restricts the next token choices to the K highest probability candidates, masking out the tail to prevent low-probability nonsensical tokens."
+  },
+  {
+    "instruction": "Help me write a professional pull request description.",
+    "response": "## Summary\n- Implemented sovereign neural inference endpoint `/v1/chat/completions`.\n- Retrained MicroTransformer on enriched instruction dataset.\n- Integrated dual-screen workflow between Codex Studio and Agent Manager.\n\n## Verification\n- Passed 100% of automated unit tests in `tests/`.\n- Verified private CPU inference latency < 25ms."
+  },
+  {
+    "instruction": "What are the 22 steps of the Zieork autonomous lifecycle?",
+    "response": "The 22 steps cover the full sovereign cycle: 1. Launch, 2. Sign In, 3. Project Root, 4. Repo Analysis, 5. Thread Init, 6. Task Spec, 7. Code Analysis, 8. Plan, 9. Permissions, 10. Multi-Agent Run, 11. Worktree Isolation, 12. Patch Generation, 13. Terminal Exec, 14. Diff Review, 15. Unit Tests, 16. Regression Gate, 17. Security Scan, 18. Commit, 19. Ship Approval, 20. Branch Merge, 21. Deploy, 22. Done."
+  }
+]

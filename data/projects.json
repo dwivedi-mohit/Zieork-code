@@ -1,0 +1,106 @@
+{
+  "active_project": "browser",
+  "projects": [
+    {
+      "id": "proj_browser",
+      "name": "browser",
+      "path": ".",
+      "threads": [
+        {
+          "id": "thread_1789477359",
+          "title": "New Task",
+          "diff": "+0 -0",
+          "time_ago": "just now",
+          "status": "active",
+          "active": true
+        },
+        {
+          "id": "thread_1789477067",
+          "title": "New Task",
+          "diff": "+0 -0",
+          "time_ago": "just now",
+          "status": "active",
+          "active": false
+        },
+        {
+          "id": "thread_1789476804",
+          "title": "New Task",
+          "diff": "+0 -0",
+          "time_ago": "just now",
+          "status": "active",
+          "active": false
+        },
+        {
+          "id": "thread_smallest_lab",
+          "title": "World's Smallest AI Research Lab Built into a Browser Tab",
+          "diff": "+120 -8",
+          "time_ago": "3m",
+          "status": "active",
+          "active": false
+        },
+        {
+          "id": "thread_upi_payment",
+          "title": "Offline UPI Payment Ideas",
+          "diff": "+45 -2",
+          "time_ago": "13h",
+          "status": "completed",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "proj_blawten_versant",
+      "name": "blawten-versant",
+      "path": ".",
+      "threads": [
+        {
+          "id": "thread_new_conv",
+          "title": "Starting A New Conversation",
+          "diff": "+10 -0",
+          "time_ago": "22h",
+          "status": "completed",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "proj_cli_project",
+      "name": "CLI Project",
+      "path": ".",
+      "threads": []
+    },
+    {
+      "id": "proj_optimistic_mendel",
+      "name": "optimistic-mendel",
+      "path": ".",
+      "threads": []
+    },
+    {
+      "id": "proj_quickedit",
+      "name": "QuickEdit",
+      "path": ".",
+      "threads": [
+        {
+          "id": "thread_fonts_selector",
+          "title": "Add all system fonts to selector",
+          "diff": "+1 -9",
+          "time_ago": "6m",
+          "status": "completed",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "proj_dev_website",
+      "name": "developers-website",
+      "path": ".",
+      "threads": []
+    },
+    {
+      "id": "proj_burger_restaurant",
+      "name": "burger-restaurant",
+      "path": ".",
+      "threads": []
+    }
+  ]
+}

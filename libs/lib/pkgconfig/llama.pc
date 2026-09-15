@@ -1,0 +1,10 @@
+prefix=/tmp/tmp1uot5xf4/wheel/platlib
+exec_prefix=/tmp/tmp1uot5xf4/wheel/platlib
+libdir=/tmp/tmp1uot5xf4/wheel/platlib/lib
+includedir=/tmp/tmp1uot5xf4/wheel/platlib/include
+
+Name: llama
+Description: Port of Facebook's LLaMA model in C/C++
+Version: 0.1.0-dev
+Libs: -L${libdir} -lggml -lggml-base -lllama
+Cflags: -I${includedir}

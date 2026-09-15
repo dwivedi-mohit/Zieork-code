@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Model weights over 50MB (GitHub limit is 100MB)
+weights/*.gguf
+weights/*.bin
+weights/*.safetensors
+
+# Temporary uploads and outputs
+uploads/*
+!uploads/.gitkeep
+static/generated/*
+!static/generated/.gitkeep
+
+# Environments & IDE
+.venv/
+venv/
+ENV/
+.idea/
+.vscode/
+
+# Logs & caches
+*.log
+.pytest_cache/
