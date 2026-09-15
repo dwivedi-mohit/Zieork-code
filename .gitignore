@@ -22,6 +22,7 @@ ENV/
 .idea/
 .vscode/
 
-# Logs & caches
+# Logs, databases & caches
 *.log
+*.db
 .pytest_cache/

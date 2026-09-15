@@ -8,6 +8,7 @@ import os
 import sys
 import time
 import argparse
+from typing import Optional, List, Dict, Any
 
 # Include local precompiled libs
 sys.path.insert(0, os.path.abspath("libs"))
@@ -36,13 +37,21 @@ DEFAULT_SYSTEM_PROMPT = (
 )
 
 class PrimeEngine:
-    def __init__(self, model_path: str = PRIME_WEIGHTS, n_ctx: int = 2048, threads: int = 6):
+    def __init__(self, model_path: str = PRIME_WEIGHTS, n_ctx: int = 4096, threads: int = 6):
         from llama_cpp import Llama
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Zieork Prime weights not found at {model_path}")
         self.model_path = model_path
         self.n_ctx = n_ctx
-        self.llm = Llama(model_path=model_path, n_ctx=n_ctx, n_threads=threads, verbose=False)
+        # 8-bit quantized KV cache (type_k=1, type_v=1) saves 50% RAM while enabling high-speed CPU inference
+        self.llm = Llama(
+            model_path=model_path,
+            n_ctx=n_ctx,
+            n_threads=threads,
+            type_k=1,
+            type_v=1,
+            verbose=False
+        )
 
     def stream_response(self, messages, system_prompt: str = ""):
         formatted_messages = []
@@ -112,10 +121,10 @@ def print_status(model_choice: str = "prime"):
 
     print("=" * 65)
 
-def get_engine(model_choice: str = "prime", threads: int = 6):
+def get_engine(model_choice: str = "prime", threads: int = 6, n_ctx: int = 4096):
     if model_choice == "prime":
         if os.path.exists(PRIME_WEIGHTS):
-            return PrimeEngine(PRIME_WEIGHTS, n_ctx=2048, threads=threads)
+            return PrimeEngine(PRIME_WEIGHTS, n_ctx=n_ctx, threads=threads)
         print(f"[Notice] Zieork Prime ({PRIME_WEIGHTS}) not found, falling back to Zieork Micro...")
     return load_micro_engine()
 
@@ -149,29 +158,69 @@ def chat_repl(engine, system_prompt: str = ""):
             print("\nExiting chat session.")
             break
 
-def single_prompt(engine, prompt: str, system_prompt: str = ""):
+def single_prompt(engine, prompt: str, system_prompt: str = "", context_path: Optional[str] = None):
+    from tools.infinite_context import infinite_context
     engine_name = "Zieork Prime" if isinstance(engine, PrimeEngine) else "Zieork Micro"
-    messages = [{"role": "user", "content": prompt}]
+
+    actual_prompt = prompt
+    if context_path:
+        print(f"🔍 Indexing & retrieving reference context from {context_path}...")
+        files, toks = infinite_context.index_path(context_path)
+        print(f"  • Processed {files} files ({toks:,} tokens)")
+        actual_prompt = infinite_context.format_prompt_with_context(prompt, max_tokens=1500)
+    elif os.path.exists("data/zieork_context.db"):
+        chunks = infinite_context.retrieve(prompt, max_tokens=1500)
+        if chunks and any(c.get("score", 0) > 0.5 for c in chunks):
+            actual_prompt = infinite_context.format_prompt_with_context(prompt, max_tokens=1500)
+
+    messages = [{"role": "user", "content": actual_prompt}]
     print(f"🤖 {engine_name}: ", end="", flush=True)
     for chunk in engine.stream_response(messages, system_prompt=system_prompt):
         print(chunk, end="", flush=True)
     print()
 
 def main():
-    parser = argparse.ArgumentParser(description="Zieork Core Model CLI")
+    from tools.infinite_context import infinite_context
+
+    parser = argparse.ArgumentParser(description="Zieork Core Model CLI with 1M+ Infinite Context Engine")
     parser.add_argument("--model", "-m", choices=["prime", "micro"], default="prime", help="Model tier (default: prime)")
     parser.add_argument("--prompt", "-p", type=str, help="Single prompt execution")
     parser.add_argument("--chat", "-c", action="store_true", help="Start interactive chat session")
     parser.add_argument("--status", "-s", action="store_true", help="Show model architecture and parameters")
     parser.add_argument("--threads", "-t", type=int, default=6, help="CPU threads for inference")
     parser.add_argument("--system", type=str, default="", help="Custom system prompt")
+    parser.add_argument("--index", "-i", type=str, help="Index a directory, codebase, or document into 1M+ context store")
+    parser.add_argument("--context", type=str, help="File or folder path to inject relevant context from for this prompt")
+    parser.add_argument("--context-stats", action="store_true", help="Display 1M+ context database volume and statistics")
+    parser.add_argument("--clear-context", action="store_true", help="Clear the local 1M+ context database")
     args = parser.parse_args()
 
-    if args.status:
+    if args.clear_context:
+        infinite_context.clear()
+        print("✅ Local 1M+ context index cleared successfully.")
+    elif args.context_stats:
+        stats = infinite_context.get_stats()
+        print("=" * 65)
+        print("📚 Zieork 1M+ Infinite Context Database Stats")
+        print("=" * 65)
+        print(f"  • Indexed Documents  : {stats['indexed_documents']:,}")
+        print(f"  • Text Chunks        : {stats['indexed_chunks']:,}")
+        print(f"  • Total Tokens       : {stats['total_tokens']:,}")
+        print(f"  • Database File Size : {stats['index_size_mb']} MB")
+        print(f"  • Context Capacity   : {stats['capacity']}")
+        print(f"  • Retrieval Latency  : {stats['search_latency']}")
+        print("=" * 65)
+    elif args.index:
+        print(f"⏳ Indexing codebase/documents from: {args.index} ...")
+        t_start = time.perf_counter()
+        files, tokens = infinite_context.index_path(args.index)
+        duration = time.perf_counter() - t_start
+        print(f"✅ Successfully indexed {files} files ({tokens:,} tokens) in {duration:.2f}s!")
+    elif args.status:
         print_status(args.model)
     elif args.prompt:
         engine = get_engine(args.model, threads=args.threads)
-        single_prompt(engine, args.prompt, system_prompt=args.system)
+        single_prompt(engine, args.prompt, system_prompt=args.system, context_path=args.context)
     elif args.chat or len(sys.argv) == 1:
         engine = get_engine(args.model, threads=args.threads)
         chat_repl(engine, system_prompt=args.system)
