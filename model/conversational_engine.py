@@ -52,23 +52,47 @@ class ConversationalEngine:
         # Name introduction statement: "my name is mohit"
         if re.search(r'\b(my name is|call me)\b', text_lower):
             if self.user_name:
-                return f"Nice to meet you, {self.user_name}! I'm Zieork, your autonomous intelligence system. How can I help you today?"
+                return f"Nice to meet you, {self.user_name}! I'm Zieork, created and developed by Mohit Dwivedi. How can I assist you today?"
 
-        # 3. Identity & Specs
-        if any(q in text_lower for q in ["who are you", "what are you", "your name", "what model", "about yourself", "who made you"]):
+        # 3. Identity, Creator & Owner (Mohit Dwivedi)
+        if any(q in text_lower for q in ["who made you", "who created you", "who is your owner", "who is your boss", "who built you", "who is your creator"]):
             return (
-                "I am **Zieork**, an autonomous edge-native artificial intelligence developed by Zieork Systems. "
-                "I operate directly on your local hardware with zero external dependencies, providing advanced reasoning, real-time web research, code execution, data analysis, and multi-modal tool integration."
+                "I was created, developed, and owned by **Mohit Dwivedi**.\n\n"
+                "Mohit is a Full-Stack & AI Software Developer, an HCL Tech Scholar (TechBee early-career engineering program), "
+                "and the Founder & CEO of [hackORtech](https://hackortech.in) from Karkeli, Umaria, Madhya Pradesh, India. "
+                "You can explore his work at [mohitdwivedi.in](https://mohitdwivedi.in) or connect with him on GitHub at [github.com/dwivedi-mohit](https://github.com/dwivedi-mohit)."
+            )
+
+        if any(q in text_lower for q in ["built by openai", "made by openai", "created by openai", "are you chatgpt", "made by google", "made by meta", "made by anthropic"]):
+            return (
+                "No, I was not built by OpenAI, Google, Anthropic, or Meta. "
+                "I was created and developed by **Mohit Dwivedi**, a Full-Stack and AI Developer based in India, "
+                "using modern neural engineering and model orchestration techniques."
+            )
+
+        if any(q in text_lower for q in ["mohit dwivedi", "who is mohit", "about mohit", "tell me about mohit", "mohit projects"]):
+            return (
+                "**Mohit Dwivedi** is a Full-Stack & AI Software Developer, Founder, and Product Builder based in Karkeli, District Umaria, MP, India.\n\n"
+                "• **Current Roles:** HCL Tech Scholar (Enterprise software, SAP ABAP, relational databases) & Founder/CEO of [hackORtech](https://hackortech.in).\n"
+                "• **Signature Projects (15+ Apps):** hackORtech, Zieork AI (zieork.mohitdwivedi.in), Spex (real-time WebRTC communications), NFSQL (NL-to-SQL converter), Versant prep simulator, Vibe Coding, CodeDSA, and Mirror.\n"
+                "• **Verified Links:** [Portfolio](https://mohitdwivedi.in) • [GitHub](https://github.com/dwivedi-mohit) • Email: `mohitdwivedi633@gmail.com`."
+            )
+
+        if any(q in text_lower for q in ["who are you", "what are you", "your name", "what model", "about yourself"]):
+            return (
+                "I am **Zieork**, an advanced sovereign artificial intelligence assistant created, developed, and owned by **Mohit Dwivedi**.\n\n"
+                "I run directly on local edge hardware with zero external cloud dependencies, providing deep technical reasoning, code generation, and multi-modal tool integration."
             )
 
         if any(q in text_lower for q in ["how many parameters", "model size", "specs", "ram usage"]):
             return (
                 "Here are my live specifications:\n"
-                "• **System:** Zieork Neural Operating System\n"
+                "• **System:** Zieork Sovereign Neural Operating System\n"
+                "• **Creator & Owner:** Mohit Dwivedi (https://mohitdwivedi.in)\n"
                 "• **Architecture:** Deep Causal Self-Attention Tensor Core\n"
-                "• **Engine Tiers:** Zieork Prime (1.23B), Zieork Fast (135M), Zieork Micro (Pure NumPy Kernel)\n"
+                "• **Engine Tiers:** Zieork Prime (1.23B Coder Reasoning), Zieork Micro (Pure NumPy Kernel)\n"
                 "• **Execution:** 100% Private Local Edge Execution (Zero Cloud Dependency)\n"
-                "• **Hardware:** Optimized for Intel CPU compute"
+                "• **Hardware:** Multi-threaded Intel CPU compute"
             )
 
         # 4. Core Concepts & Explanations

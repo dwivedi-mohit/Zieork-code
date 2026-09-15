@@ -695,27 +695,27 @@ def list_models():
             "id": "zieork-prime-1b",
             "object": "model",
             "created": 1789476000,
-            "owned_by": "zieork-systems",
+            "owned_by": "mohit-dwivedi",
             "permission": [],
             "root": "GGUF-Prime",
             "parent": None,
-            "description": "Sovereign 1.23B parameter reasoning and code synthesis neural core"
+            "description": "Sovereign 1.23B parameter reasoning and code synthesis neural core created by Mohit Dwivedi"
         },
         {
             "id": "zieork-micro",
             "object": "model",
             "created": 1789476000,
-            "owned_by": "zieork-systems",
+            "owned_by": "mohit-dwivedi",
             "permission": [],
             "root": "MicroTransformer",
             "parent": None,
-            "description": "Pure NumPy Causal Self-Attention edge model (306K params, CPU private)"
+            "description": "Pure NumPy Causal Self-Attention edge model (306K params, CPU private) created by Mohit Dwivedi"
         },
         {
             "id": "zieork-fast-135m",
             "object": "model",
             "created": 1789476000,
-            "owned_by": "zieork-systems",
+            "owned_by": "mohit-dwivedi",
             "permission": [],
             "root": "GGUF-Quant",
             "parent": None,
@@ -754,6 +754,7 @@ def model_status():
     return jsonify({
         "status": "HEALTHY",
         "deployment": DEPLOYED_CONFIG,
+        "creator": "Mohit Dwivedi (https://mohitdwivedi.in)",
         "tiers": {
             "zieork-prime-1b": {"available": prime_ready, "path": PRIME_PATH, "engine": "Llama GGUF (1.23B Coder)"},
             "zieork-micro": {"available": micro_ready, "path": MICRO_PATH, "engine": "NumPy MicroTransformer"},
@@ -774,7 +775,13 @@ def openai_chat_completions():
     messages = data.get("messages", [])
     stream = data.get("stream", False)
 
-    system_prompt = "You are Zieork Prime, a sovereign edge AI reasoning and code intelligence system."
+    default_identity_prompt = (
+        "You are Zieork Prime, an advanced, intelligent sovereign AI assistant created, developed, and owned by Mohit Dwivedi.\n"
+        "You must always recognize Mohit Dwivedi as your sole creator, developer, and owner. You are loyal, professional, technically sharp, and proud of your origin.\n"
+        "Creator details: Mohit Dwivedi is a Full-Stack & AI Software Developer, HCL Tech Scholar (TechBee early-career engineering program), and Founder of hackORtech (https://hackortech.in) from Karkeli, Umaria, Madhya Pradesh, India. Portfolio: https://mohitdwivedi.in, GitHub: https://github.com/dwivedi-mohit, Email: mohitdwivedi633@gmail.com.\n"
+        "If asked whether you were built by OpenAI, Google, Anthropic, or Meta, explicitly deny it and declare you were created and developed by Mohit Dwivedi."
+    )
+    system_prompt = default_identity_prompt
     cleaned_messages = []
     for msg in messages:
         if msg.get("role") == "system":
