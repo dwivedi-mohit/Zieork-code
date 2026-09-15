@@ -2,810 +2,171 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zieork — Sovereign Autonomous Software Engine</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Zieork Prime — Mobile AI</title>
+  
+  <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="/static/manifest.json" />
+  <meta name="theme-color" content="#212121" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Zieork" />
+  <meta name="description" content="Sovereign AI Assistant by Mohit Dwivedi" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/static/mobile.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
-<body class="codex-body">
-  <!-- Main Desktop Window Frame -->
-  <div class="codex-window">
+<body>
+  <div class="mobile-app">
     
-    <!-- Window Title Bar -->
-    <header class="window-titlebar">
-      <div class="titlebar-left">
-        <div class="codex-brand-glyph">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="4 17 10 11 4 5"></polyline>
-            <line x1="12" y1="19" x2="20" y2="19"></line>
-          </svg>
-        </div>
-        <span class="titlebar-app-name">Zieork</span>
-        <div class="user-profile-badge" id="user-profile-badge" title="Step 2: Sign In / User Profile">
-          <span class="user-avatar-circle">B</span>
-          <span class="user-profile-name">blawten</span>
-        </div>
+    <!-- 1. Mobile Header -->
+    <header class="mobile-header">
+      <button id="drawer-btn" class="icon-btn" aria-label="Open Sidebar Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="header-title-container">
+        <span class="header-title">Zieork Prime</span>
+        <span class="header-badge">1.23B Local</span>
       </div>
-      <div class="titlebar-center">
-        <span id="window-active-task-header" class="titlebar-task-name">Add all system fonts to selector</span>
-      </div>
-      <div class="titlebar-controls">
-        <button id="win-min-btn" class="win-btn" title="Minimize">—</button>
-        <button id="win-max-btn" class="win-btn" title="Maximize">□</button>
-        <button id="win-close-btn" class="win-btn win-close" title="Close">✕</button>
-      </div>
+
+      <button id="new-chat-btn" class="icon-btn" aria-label="Start New Chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+      </button>
     </header>
 
-    <!-- App Container (Sidebar + Workspace) -->
-    <div class="app-layout">
+    <!-- 2. Chat Area -->
+    <main class="chat-container" id="chat-container">
       
-      <!-- Left Sidebar -->
-      <aside class="codex-sidebar">
-        <!-- Sidebar Navigation Actions -->
-        <div class="sidebar-top-nav">
-          <button id="sidebar-toggle-btn" class="sidebar-nav-item" title="Toggle Sidebar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="9" y1="3" x2="9" y2="21"></line>
-            </svg>
-          </button>
-          
-          <button id="new-thread-btn" class="sidebar-action-btn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 5v14M5 12h14"/>
-            </svg>
-            <span>New thread</span>
-          </button>
-
-          <button id="automations-nav-btn" class="sidebar-action-btn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-            <span>Automations</span>
-          </button>
-
-          <button id="skills-nav-btn" class="sidebar-action-btn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span>Skills</span>
-          </button>
+      <!-- Welcome / Empty Screen -->
+      <div class="welcome-screen" id="welcome-screen">
+        <div class="welcome-logo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4V4a2 2 0 0 1 2-2zm-4 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm8 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-4 5a3 3 0 0 0-3 3h6a3 3 0 0 0-3-3z"/>
+          </svg>
         </div>
+        <h1 class="welcome-title">What can I help with?</h1>
+        <p class="welcome-subtitle">
+          Sovereign AI created by <a href="https://mohitdwivedi.in" target="_blank" rel="noopener">Mohit Dwivedi</a>
+        </p>
 
-        <!-- Recent Tasks List -->
-        <div class="sidebar-recent-tasks" id="recent-tasks-list">
-          <div class="recent-task-row" data-task-id="task_pivot">
-            <span class="task-row-title">Pivot to ta...</span>
-            <span class="badge-approval">Awaiting approval</span>
-            <span class="task-row-time">5m</span>
+        <!-- Quick Action Tap Cards -->
+        <div class="quick-chips-grid">
+          <div class="quick-chip" data-prompt="Write a clean Python function to check if a string is a palindrome.">
+            <span class="chip-title">🐍 Python Palindrome</span>
+            <span class="chip-desc">Clean two-pointer algorithm with docstrings</span>
           </div>
-          <div class="recent-task-row" data-task-id="task_changelog">
-            <span class="task-row-title">Regenerate Zieork changelog</span>
-            <span class="task-row-time">7m</span>
+          <div class="quick-chip" data-prompt="Explain how recursion works in programming to a beginner with a simple example.">
+            <span class="chip-title">💡 Explain Recursion</span>
+            <span class="chip-desc">Simple real-world analogy and step-by-step logic</span>
           </div>
-          <div class="recent-task-row" data-task-id="task_dx1181">
-            <span class="task-row-bullet">●</span>
-            <span class="task-row-title">Fix DX-1181</span>
-            <span class="task-row-time">8m</span>
+          <div class="quick-chip" data-prompt="Who created and developed Zieork, and what is his background?">
+            <span class="chip-title">🚀 About Mohit Dwivedi</span>
+            <span class="chip-desc">Creator background, hackORtech, and portfolio</span>
           </div>
-          <div class="recent-task-row" data-task-id="task_brainstorm">
-            <span class="task-row-title">Brainstorm ideas for new feature</span>
-            <span class="task-row-time">7m</span>
+          <div class="quick-chip" data-prompt="What is the difference between synchronous and asynchronous execution in Python?">
+            <span class="chip-title">⚡ Async vs Sync</span>
+            <span class="chip-desc">Event loop mechanics and when to use each</span>
           </div>
         </div>
+      </div>
 
-        <!-- Projects & Threads Tree -->
-        <div class="sidebar-threads-section">
-          <div class="threads-header">
-            <span>Threads</span>
-            <button class="icon-btn-micro" title="Filter / Sort">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="4" y1="6" x2="20" y2="6"></line>
-                <line x1="8" y1="12" x2="16" y2="12"></line>
-                <line x1="10" y1="18" x2="14" y2="18"></line>
-              </svg>
-            </button>
-          </div>
+    </main>
 
-          <div class="projects-tree" id="projects-tree-container">
-            <!-- Project 1 -->
-            <div class="project-group">
-              <div class="project-title-row">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>developers-website</span>
-              </div>
-            </div>
+    <!-- 3. Mobile Floating Bottom Input Bar -->
+    <footer class="mobile-input-bar">
+      <div class="input-pill-container">
+        <!-- Microphone Button (Voice Dictation) -->
+        <button id="mic-btn" class="input-action-btn mic-btn" aria-label="Voice Dictation" title="Tap to speak">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+        </button>
 
-            <!-- Project 2 (Active) -->
-            <div class="project-group active">
-              <div class="project-title-row">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>QuickEdit</span>
-              </div>
-              <div class="project-threads-list">
-                <div class="thread-item active">
-                  <span class="thread-item-name">Add all system fonts to selec...</span>
-                  <span class="diff-tag"><span class="diff-add">+1</span> <span class="diff-del">-9</span></span>
-                  <span class="thread-item-time">6m</span>
-                </div>
-              </div>
-            </div>
+        <!-- Auto-expanding Textarea -->
+        <textarea
+          id="chat-textarea"
+          class="chat-textarea"
+          placeholder="Ask Zieork Prime..."
+          rows="1"
+          autocomplete="off"
+        ></textarea>
 
-            <!-- Project 3 -->
-            <div class="project-group">
-              <div class="project-title-row">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>burger-restaurant</span>
-              </div>
-            </div>
+        <!-- Send Button -->
+        <button id="send-btn" class="input-action-btn send-btn" aria-label="Send Message" title="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="input-footer-tag">
+        Zieork Prime • Developed by <a href="https://mohitdwivedi.in" target="_blank">Mohit Dwivedi</a>
+      </div>
+    </footer>
 
-            <button id="add-project-btn" class="add-project-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Add project</span>
-            </button>
-          </div>
+    <!-- 4. Slide-Out Drawer (Sidebar) -->
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+    <aside id="mobile-drawer" class="mobile-drawer">
+      <div class="drawer-header">
+        <button id="drawer-new-btn" class="drawer-new-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          <span>New Chat</span>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="drawer-section-title">Decoding Presets</div>
+        <div class="preset-selector">
+          <span class="preset-pill active" data-preset="chatgpt">ChatGPT</span>
+          <span class="preset-pill" data-preset="code">Code</span>
+          <span class="preset-pill" data-preset="creative">Creative</span>
+          <span class="preset-pill" data-preset="precise">Precise</span>
         </div>
 
-        <!-- Sidebar Footer -->
-        <div class="sidebar-footer">
-          <button id="settings-btn" class="sidebar-footer-btn">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span>Settings</span>
-          </button>
-        </div>
-      </aside>
+        <div class="drawer-section-title" style="margin-top: 14px;">Recent Chats</div>
+        <div id="history-list"></div>
+      </div>
 
-      <!-- Main Workspace Center -->
-      <main class="codex-main">
-        
-        <!-- Workspace Header Bar -->
-        <header class="workspace-header">
-          <div class="workspace-header-left">
-            <h2 id="current-task-title" class="current-task-title">Add all system fonts to selector</h2>
-            <div class="project-pill" id="current-project-pill">QuickEdit</div>
-            <button class="icon-btn-micro" title="Thread options">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-            </button>
-          </div>
-
-          <div class="workspace-header-right">
-            <button id="files-nav-btn" class="header-action-btn" title="Step 4: Files, Git & AGENTS.md">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-              <span>Files</span>
-            </button>
-
-            <button id="multiagent-nav-btn" class="header-action-btn" title="Step 17: Multi-Agent Orchestra (5 Roles)">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              <span>Multi-Agent</span>
-            </button>
-
-            <button id="worktrees-nav-btn" class="header-action-btn" title="Step 16: Git Worktrees">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="9" r="3"></circle><path d="M6 9v6"></path><path d="M6 9a9 9 0 0 1 9-9h3"></path></svg>
-              <span>Worktrees</span>
-            </button>
-
-            <button id="mcp-nav-btn" class="header-action-btn" title="Step 19: MCP Servers & Tools">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-              <span>MCP</span>
-            </button>
-
-            <button id="ship-nav-btn" class="header-action-btn" title="Step 22: Ship & Deploy Pipeline">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-              <span style="color: #10b981; font-weight: 600;">Ship</span>
-            </button>
-
-            <a href="/manager" id="switch-to-manager-btn" class="header-action-btn" title="Switch to Antigravity Agent Manager Screen" style="text-decoration: none; border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="17 1 21 5 17 9"></polyline>
-                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                <polyline points="7 23 3 19 7 15"></polyline>
-                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-              </svg>
-              <span>Agent Manager</span>
-            </a>
-
-            <button id="open-ide-btn" class="header-action-btn">
-              <svg class="vs-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-              <span>Open</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <button id="handoff-btn" class="header-action-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
-              <span>Hand off</span>
-            </button>
-
-            <button id="commit-btn" class="header-action-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <line x1="3" y1="12" x2="9" y2="12"></line>
-                <line x1="15" y1="12" x2="21" y2="12"></line>
-              </svg>
-              <span>Commit</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-            </button>
-
-            <div class="diff-counter-pill" id="diff-counter-pill" title="Total workspace diff stats">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span class="diff-add">+889</span>
-              <span class="diff-del">-0</span>
+      <!-- Creator Profile Card -->
+      <div class="drawer-footer">
+        <div class="creator-card">
+          <div class="creator-avatar">MD</div>
+          <div class="creator-details">
+            <span class="creator-name">Mohit Dwivedi</span>
+            <span class="creator-role">Sole Creator & Owner</span>
+            <div class="creator-links">
+              <a href="https://mohitdwivedi.in" target="_blank" class="creator-link">Portfolio</a>
+              <span style="color:#555;">•</span>
+              <a href="https://hackortech.in" target="_blank" class="creator-link">hackORtech</a>
+              <span style="color:#555;">•</span>
+              <a href="https://github.com/dwivedi-mohit" target="_blank" class="creator-link">GitHub</a>
             </div>
-
-            <button class="icon-btn-micro" title="Repository Branch">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="6" y1="3" x2="6" y2="15"></line>
-                <circle cx="18" cy="6" r="3"></circle>
-                <circle cx="6" cy="18" r="3"></circle>
-                <path d="M18 9a9 9 0 0 1-9 9"></path>
-              </svg>
-            </button>
-          </div>
-        </header>
-
-        <!-- Messages & Execution Stream Container -->
-        <div class="execution-stream" id="execution-stream">
-          
-          <!-- Sample Conversation Turn matching the reference screenshot -->
-          <div class="execution-turn" id="turn-active">
-            
-            <!-- Step 8: Interactive Implementation Plan Card with Checkboxes -->
-            <div class="plan-card" id="plan-card">
-              <div class="plan-header" id="plan-header-toggle">
-                <div class="plan-header-left">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                  <span class="plan-title">Implementation Plan</span>
-                  <span class="plan-badge" id="plan-badge">3 of 5 completed</span>
-                </div>
-                <div class="plan-header-right">
-                  <div class="plan-progress-bar">
-                    <div class="plan-progress-fill" id="plan-progress-fill" style="width: 60%;"></div>
-                  </div>
-                  <svg class="plan-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-              </div>
-              <div class="plan-body" id="plan-body">
-                <div class="plan-step completed">
-                  <input type="checkbox" checked id="step-1" class="plan-step-check" />
-                  <label for="step-1">
-                    <strong>1. Inspect Workspace &amp; AGENTS.md</strong>
-                    <span>Deep scan of font selector paths and AGENTS.md rules</span>
-                  </label>
-                </div>
-                <div class="plan-step completed">
-                  <input type="checkbox" checked id="step-2" class="plan-step-check" />
-                  <label for="step-2">
-                    <strong>2. Formulate Architecture Strategy</strong>
-                    <span>Replace hard-coded static XAML fonts with GDI runtime enumeration</span>
-                  </label>
-                </div>
-                <div class="plan-step completed">
-                  <input type="checkbox" checked id="step-3" class="plan-step-check" />
-                  <label for="step-3">
-                    <strong>3. Precision Code Edits</strong>
-                    <span>Apply atomic diffs to MainPage.xaml and MainPage.xaml.cs</span>
-                  </label>
-                </div>
-                <div class="plan-step in-progress">
-                  <input type="checkbox" id="step-4" class="plan-step-check" />
-                  <label for="step-4">
-                    <strong>4. Automated Verification &amp; Build</strong>
-                    <span>Execute dotnet build and assert 0 warnings, 0 errors</span>
-                  </label>
-                </div>
-                <div class="plan-step">
-                  <input type="checkbox" id="step-5" class="plan-step-check" />
-                  <label for="step-5">
-                    <strong>5. Diff Audit &amp; Review</strong>
-                    <span>Present clean unified diff for 1-click user Accept / Reject</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Monospace Tool Command Lines -->
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml.cs | ForEach-Object { if ($i -ge 260 -and $i -le 460) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml | ForEach-Object { if ($i -ge 80 -and $i -le 105) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$mainPageXaml = @" &lt;Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:Class="QuickEdit.Views.MainPage" ...</span>
-            </div>
-
-            <!-- Inline Agent Thought -->
-            <div class="agent-inline-thought">
-              The source edits are in place. I'm checking the diff now for correctness, then I'll run a build to catch any WinUI or interop issues from the new font enumeration path.
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml.cs | ForEach-Object { if ($i -ge 1 -and $i -le 220) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">git diff -- Views\MainPage.xaml Views\MainPage.xaml.cs for 1s</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml.cs | ForEach-Object { if ($i -ge 220 -and $i -le 460) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml | ForEach-Object { if ($i -ge 84 -and $i -le 100) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">$i=1; Get-Content Views\MainPage.xaml.cs | ForEach-Object { if ($i -ge 460 -and $i -le 560) { "{0,4}: {1}" -f $i, $_ }; $i++ } ...</span>
-            </div>
-
-            <!-- Second Agent Thought -->
-            <div class="agent-inline-thought">
-              The code is consistent on inspection. I'm building now to catch any WinUI/XAML or interop compile issues before I hand this back.
-            </div>
-
-            <div class="cmd-line">
-              <span class="cmd-prefix">Ran</span>
-              <span class="cmd-code">dotnet build QuickEdit.csproj for 13s</span>
-            </div>
-
-            <!-- Duration Divider Line -->
-            <div class="timeline-divider">
-              <span>Worked for 6m 40s</span>
-            </div>
-
-            <!-- Assistant Final Explanation Body -->
-            <div class="agent-final-response">
-              <p>The font selector now loads the full installed Windows font family list at runtime instead of the six hard-coded entries. I removed the static ComboBox items in <a href="#" class="file-link">MainPage.xaml</a> and updated the selection handling in <a href="#" class="file-link">MainPage.xaml.cs</a> to work with string-based items.</p>
-              
-              <p>The installed font families are enumerated from GDI, deduplicated, sorted, and used to populate the selector during page construction in <a href="#" class="file-link">MainPage.xaml.cs</a> and <a href="#" class="file-link">MainPage.xaml</a>. <code>dotnet build QuickEdit.csproj</code> succeeded with 0 warnings and 0 errors. I didn't launch the UI, so the only remaining check is visual confirmation that the dropdown behaves well with the longer list.</p>
-            </div>
-
-            <!-- File Changes Summary Card (Diff Inspector) -->
-            <div class="file-changes-card" id="file-changes-card">
-              <div class="changes-header">
-                <span class="changes-title">1 file changed</span>
-                <button class="undo-btn" id="undo-btn" title="Revert changes in this file">
-                  <span>Undo</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-                </button>
-              </div>
-              <div class="file-change-row" id="file-change-row" title="Click to view diff">
-                <span class="file-change-path">Views/MainPage.xaml</span>
-                <span class="diff-tag"><span class="diff-add">+1</span> <span class="diff-del">-9</span></span>
-              </div>
-
-              <!-- Step 14: Review Decision Bar (Accept / Reject / Revise) -->
-              <div class="review-actions-bar" id="review-actions-bar">
-                <button class="review-btn btn-accept" id="review-accept-btn" title="Accept proposed changes and stage in git">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Accept</span>
-                </button>
-                <button class="review-btn btn-reject" id="review-reject-btn" title="Reject and revert changes">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                  <span>Reject</span>
-                </button>
-                <button class="review-btn btn-revise" id="review-revise-btn" title="Ask Zieork to make revisions">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                  <span>Ask to Revise</span>
-                </button>
-              </div>
-
-              <!-- Revision Prompt Input Drawer -->
-              <div class="revision-input-row hidden" id="revision-input-row">
-                <input type="text" id="revision-prompt-input" placeholder="Specify instructions for Zieork (e.g. 'Use async font loader instead')..." />
-                <button id="submit-revision-btn" class="btn-micro-submit">Send Revision</button>
-              </div>
-            </div>
-
           </div>
         </div>
+      </div>
+    </aside>
 
-        <!-- Floating Codex Input Container -->
-        <footer class="floating-input-wrapper">
-          <div class="floating-input-box">
-            <textarea
-              id="user-input"
-              class="codex-textarea"
-              placeholder="Ask for follow up changes..."
-              rows="1"
-            ></textarea>
+    <!-- Toast Notification -->
+    <div id="toast-msg" class="toast-msg"></div>
 
-            <!-- Inside Input Toolbar -->
-            <div class="input-inner-toolbar">
-              <div class="toolbar-left">
-                <input type="file" id="file-upload-input" style="display:none;" multiple>
-                <button type="button" id="attach-btn" class="input-tool-btn" title="Add file or context">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                </button>
-
-                <!-- Model Selector Pill -->
-                <div class="pill-dropdown-wrapper">
-                  <button type="button" id="model-pill-btn" class="pill-btn">
-                    <span id="active-model-name">Zieork-Prime</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                  </button>
-                  <div class="pill-menu hidden" id="model-menu">
-                    <div class="pill-menu-item active" data-model="prime">⚡ Zieork-Prime (1.23B Deep Reasoning)</div>
-                    <div class="pill-menu-item" data-model="fast">⚡ Zieork-Fast (135M Instant Reflex)</div>
-                    <div class="pill-menu-item" data-model="micro">⚡ Zieork-Micro (Pure NumPy Kernel)</div>
-                  </div>
-                </div>
-
-                <!-- Reasoning Effort Pill -->
-                <div class="pill-dropdown-wrapper">
-                  <button type="button" id="reasoning-pill-btn" class="pill-btn">
-                    <span id="active-reasoning-val">Extra High</span>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                  </button>
-                  <div class="pill-menu hidden" id="reasoning-menu">
-                    <div class="pill-menu-item active" data-effort="extra_high">Extra High</div>
-                    <div class="pill-menu-item" data-effort="high">High</div>
-                    <div class="pill-menu-item" data-effort="medium">Medium</div>
-                    <div class="pill-menu-item" data-effort="low">Low</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="toolbar-right">
-                <!-- Microphone Voice Input Button -->
-                <button type="button" id="mic-btn" class="input-tool-btn mic-btn" title="Speak to Zieork (Speech-to-Text)">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                  </svg>
-                </button>
-
-                <!-- Circular Send Button -->
-                <button type="button" id="send-btn" class="circular-send-btn" title="Send Message">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bottom Footer Status Bar -->
-          <div class="input-footer-bar">
-            <div class="footer-bar-left">
-              <div class="footer-meta-pill" id="local-mode-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                <span>Local</span>
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </div>
-
-              <div class="footer-meta-pill" id="permissions-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span id="active-permission-text">Default permissions</span>
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </div>
-            </div>
-
-            <div class="footer-bar-right">
-              <div class="footer-meta-pill" id="branch-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="6" y1="3" x2="6" y2="15"></line>
-                  <circle cx="18" cy="6" r="3"></circle>
-                  <circle cx="6" cy="18" r="3"></circle>
-                  <path d="M18 9a9 9 0 0 1-9 9"></path>
-                </svg>
-                <span id="active-branch-name">main</span>
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </div>
-            </div>
-          </div>
-        </footer>
-
-      </main>
-
-      <!-- Side-by-Side Live Interactive Canvas Drawer (Claude Artifacts preserved) -->
-      <aside id="artifacts-panel" class="artifacts-panel hidden">
-        <div class="artifact-header">
-          <div class="artifact-header-left">
-            <div class="artifact-icon-glow">⚡</div>
-            <div class="artifact-titles">
-              <h3 id="artifact-title">Application Artifact</h3>
-              <span id="artifact-type-text" class="artifact-subtitle">Interactive Web Component</span>
-            </div>
-          </div>
-          <div class="artifact-header-right">
-            <button id="close-artifact-btn" class="icon-btn-micro">&times;</button>
-          </div>
-        </div>
-        <div class="artifact-canvas-body">
-          <iframe id="artifact-preview-frame" sandbox="allow-scripts allow-modals allow-same-origin" title="Live Preview"></iframe>
-        </div>
-      </aside>
-
-    </div>
   </div>
 
-  <!-- Diff Viewer Modal -->
-  <div id="diff-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #a855f7; font-weight: 700;">DIFF</span>
-          <span id="diff-modal-filename" style="font-family: 'JetBrains Mono', monospace; font-size: 13px;">Views/MainPage.xaml</span>
-        </div>
-        <button id="close-diff-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body">
-        <pre class="diff-code-view" id="diff-content-view">
-@@ -80,9 +80,1 @@
-- <ComboBox x:Name="FontSelector" ItemsSource="{x:Bind HardcodedFonts}" />
-+ <ComboBox x:Name="FontSelector" ItemsSource="{x:Bind InstalledSystemFonts}" />
-        </pre>
-      </div>
-    </div>
-  </div>
-
-  <!-- Automations Modal -->
-  <div id="automations-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 500px;">
-      <div class="modal-header">
-        <span style="font-weight: 600;">Automations &amp; Background Tasks</span>
-        <button id="close-automations-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px;">
-        <div style="background: #10141e; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-          <strong>Daily Codebase Health Audit</strong>
-          <div style="color: #94a3b8; font-size: 12px;">Runs every day at 09:00 AM • Active</div>
-        </div>
-        <div style="background: #10141e; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
-          <strong>Zieork Autonomous Regression Testing</strong>
-          <div style="color: #94a3b8; font-size: 12px;">Runs on git commit • Active (100% Pass@1)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Skills Modal -->
-  <div id="skills-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 520px;">
-      <div class="modal-header">
-        <span style="font-weight: 600;">Registered Skills &amp; Capabilities</span>
-        <button id="close-skills-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" id="skills-list-container" style="padding: 16px;">
-        <!-- Filled dynamically -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Settings Modal -->
-  <div id="settings-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 480px;">
-      <div class="modal-header">
-        <span style="font-weight: 600;">Zieork Neural Engine Settings</span>
-        <button id="close-settings-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px; display: flex; flex-direction: column; gap: 14px;">
-        <div>
-          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">System Personality</label>
-          <textarea id="system-prompt-input" rows="3" style="width: 100%; background: #10141e; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; padding: 8px; font-size: 12px;">You are Zieork, a sovereign autonomous artificial intelligence software engineer developed by Zieork Systems.</textarea>
-        </div>
-        <div>
-          <label style="font-size: 12px; color: #94a3b8; display: block; margin-bottom: 4px;">Approval Policy</label>
-          <select id="setting-policy" style="width: 100%; background: #10141e; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: #fff; padding: 8px; font-size: 12px;">
-            <option value="auto" selected>Auto (Execute safe commands autonomously)</option>
-            <option value="guarded">Guarded (Prompt before destructive actions)</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Project Files & AGENTS.md Modal -->
-  <div id="files-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 860px; width: 90vw; height: 78vh; display: flex; flex-direction: column;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #a855f7; font-weight: 700;">PROJECT REPOSITORY</span>
-          <span id="files-modal-repo-name" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #94a3b8;">/data/browser</span>
-        </div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <button id="save-agents-md-btn" class="header-action-btn" style="background: #10b981; color: #fff; font-size: 11px; padding: 4px 10px;">💾 Save AGENTS.md</button>
-          <button id="close-files-modal" class="win-btn">✕</button>
-        </div>
-      </div>
-      <div class="modal-body" style="display: flex; flex: 1; overflow: hidden; padding: 0;">
-        <!-- Left: File Tree Explorer -->
-        <div class="file-explorer-sidebar" style="width: 280px; border-right: 1px solid var(--border-subtle); overflow-y: auto; padding: 12px; background: #0b0e14;">
-          <div style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase;">Workspace Files</div>
-          <div id="file-tree-view"></div>
-        </div>
-        <!-- Right: File Previewer / AGENTS.md Editor & Environment Diagnostics -->
-        <div class="file-explorer-content" style="flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #0f131c;">
-          <div class="file-content-tabs" style="display: flex; border-bottom: 1px solid var(--border-subtle); background: #161a24; padding: 0 12px;">
-            <button class="file-tab-btn active" id="tab-agents-md">AGENTS.md</button>
-            <button class="file-tab-btn" id="tab-file-viewer">File Viewer</button>
-            <button class="file-tab-btn" id="tab-env-diag">Environment</button>
-          </div>
-          <div class="tab-pane-content" style="flex: 1; overflow: auto; padding: 12px;" id="pane-agents-md">
-            <textarea id="agents-md-editor" style="width: 100%; height: 100%; min-height: 420px; background: #0c0f17; color: #e2e8f0; font-family: 'JetBrains Mono', monospace; font-size: 12px; border: 1px solid var(--border-subtle); border-radius: 6px; padding: 12px; resize: none;"></textarea>
-          </div>
-          <div class="tab-pane-content hidden" style="flex: 1; overflow: auto; padding: 12px;" id="pane-file-viewer">
-            <div id="file-viewer-meta" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #64748b; margin-bottom: 8px;">Select a file from the tree to view</div>
-            <pre id="file-viewer-content" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #cbd5e1; background: #0c0f17; border-radius: 6px; padding: 12px; white-space: pre-wrap; word-break: break-all;"></pre>
-          </div>
-          <div class="tab-pane-content hidden" style="flex: 1; overflow: auto; padding: 16px;" id="pane-env-diag">
-            <div id="env-diag-content" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Multi-Agent Orchestra Modal -->
-  <div id="multiagent-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 820px; width: 88vw;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #a855f7; font-weight: 700;">👥 MULTI-AGENT TEAM</span>
-          <span style="font-size: 12px; color: #94a3b8;">5 Autonomous Roles (Architect, Backend, Frontend, QA, Reviewer)</span>
-        </div>
-        <button id="close-multiagent-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px;">
-        <div style="display: flex; gap: 10px; margin-bottom: 16px;">
-          <input type="text" id="multiagent-task-input" placeholder="Task for Multi-Agent Orchestra (e.g. Implement responsive dark theme with auth tests)..." style="flex: 1; background: #10141e; border: 1px solid var(--border-card); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 13px;" />
-          <button id="trigger-multiagent-btn" class="header-action-btn" style="background: #6366f1; color: #fff; font-weight: 600; padding: 0 16px;">🚀 Run Mission</button>
-        </div>
-        <div id="multiagent-agents-grid" style="display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto;">
-          <!-- Loaded dynamically -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Git Worktrees Modal -->
-  <div id="worktrees-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 600px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #a855f7; font-weight: 700;">⑂ GIT WORKTREES</span>
-          <span style="font-size: 12px; color: #94a3b8;">Isolated branches for parallel agents</span>
-        </div>
-        <button id="close-worktrees-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px;">
-        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
-          <input type="text" id="new-worktree-branch" placeholder="Branch name (e.g. feat-parallel-auth)..." style="flex: 1; background: #10141e; border: 1px solid var(--border-card); border-radius: 6px; padding: 8px 12px; color: #fff; font-size: 12px;" />
-          <button id="create-worktree-btn" class="header-action-btn" style="background: #10b981; color: #fff; padding: 0 14px;">+ Create Worktree</button>
-        </div>
-        <div id="worktrees-list" style="display: flex; flex-direction: column; gap: 8px;">
-          <!-- Loaded dynamically -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ship / Deploy & Telemetry Modal -->
-  <div id="ship-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 700px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #10b981; font-weight: 700;">🚀 SHIP &amp; DEPLOY</span>
-          <span style="font-size: 12px; color: #94a3b8;">Zero-Downtime Edge Deployment Pipeline</span>
-        </div>
-        <button id="close-ship-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <label style="font-size: 12px; color: #94a3b8;">Target Environment:</label>
-            <select id="ship-env-select" style="background: #10141e; border: 1px solid var(--border-card); border-radius: 6px; padding: 6px 10px; color: #fff; font-size: 12px;">
-              <option value="production">Production (Global Edge CDN)</option>
-              <option value="staging">Staging (Preview Slot)</option>
-            </select>
-          </div>
-          <button id="trigger-ship-deploy-btn" class="header-action-btn" style="background: #10b981; color: #fff; font-weight: 600; padding: 6px 16px;">🚀 Deploy Now</button>
-        </div>
-
-        <div id="ship-telemetry-metrics" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px;">
-          <div class="ship-metric-card">
-            <span class="metric-label">Status</span>
-            <span class="metric-value text-green" id="ship-metric-status">HEALTHY</span>
-          </div>
-          <div class="ship-metric-card">
-            <span class="metric-label">P99 Latency</span>
-            <span class="metric-value" id="ship-metric-lat">14.2ms</span>
-          </div>
-          <div class="ship-metric-card">
-            <span class="metric-label">Uptime</span>
-            <span class="metric-value" id="ship-metric-uptime">99.99%</span>
-          </div>
-          <div class="ship-metric-card">
-            <span class="metric-label">Nodes</span>
-            <span class="metric-value" id="ship-metric-nodes">3 Active</span>
-          </div>
-        </div>
-
-        <div style="font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 6px;">Deployment Logs:</div>
-        <pre id="ship-build-logs" style="background: #090c13; border: 1px solid var(--border-subtle); border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #38bdf8; height: 160px; overflow-y: auto;">[Zieork Engine Ready] Click 'Deploy Now' to trigger zero-downtime edge release.</pre>
-      </div>
-    </div>
-  </div>
-
-  <!-- MCP Servers & Tools Modal -->
-  <div id="mcp-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 620px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #a855f7; font-weight: 700;">🔌 MCP SERVERS &amp; TOOLS</span>
-          <span style="font-size: 12px; color: #94a3b8;">Model Context Protocol Registry</span>
-        </div>
-        <button id="close-mcp-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px;">
-        <div id="mcp-servers-list" style="display: flex; flex-direction: column; gap: 8px;">
-          <!-- Loaded dynamically -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Permissions Guardrails Modal -->
-  <div id="permissions-modal" class="modal-backdrop hidden">
-    <div class="diff-modal-content" style="max-width: 500px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span style="color: #f59e0b; font-weight: 700;">🛡️ PERMISSIONS &amp; GUARDRAILS</span>
-        </div>
-        <button id="close-permissions-modal" class="win-btn">✕</button>
-      </div>
-      <div class="modal-body" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
-        <div style="background: #10141e; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <strong style="color: #f8fafc;">👁️ Read Workspace</strong>
-            <div style="color: #94a3b8; font-size: 11px;">Inspect files, search codebase, read AGENTS.md</div>
-          </div>
-          <input type="checkbox" checked id="perm-read-toggle" />
-        </div>
-        <div style="background: #10141e; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <strong style="color: #f8fafc;">✏️ Edit Workspace Files</strong>
-            <div style="color: #94a3b8; font-size: 11px;">Create, update, and patch source code files</div>
-          </div>
-          <input type="checkbox" checked id="perm-edit-toggle" />
-        </div>
-        <div style="background: #10141e; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <strong style="color: #f8fafc;">💻 Execute Terminal Commands</strong>
-            <div style="color: #94a3b8; font-size: 11px;">Run build, test, and git inside local sandbox</div>
-          </div>
-          <input type="checkbox" checked id="perm-term-toggle" />
-        </div>
-        <div style="background: #10141e; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <strong style="color: #f8fafc;">🌐 Elevated / Network Access</strong>
-            <div style="color: #94a3b8; font-size: 11px;">Outbound HTTP requests and deployment calls</div>
-          </div>
-          <input type="checkbox" id="perm-net-toggle" />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
+  <!-- JavaScript -->
+  <script src="/static/mobile.js"></script>
 </body>
 </html>
