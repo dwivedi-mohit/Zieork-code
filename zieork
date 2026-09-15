@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cd /data/browser || exit 1
+python3 cli.py "$@"
